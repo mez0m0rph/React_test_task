@@ -105,7 +105,8 @@ button:hover {
 }
 
 .tree-node.selected {
-    background: rgba(44, 160, 44, 0.12);
+    background: #ffd166;
+    color: #7a4b00;
 }
 
 .tree-children {

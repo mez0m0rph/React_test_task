@@ -23,14 +23,19 @@ function App() {
             return;
         }
 
-        if (!nodeName.trim()) {
-            alert("введите имя узла")
+        const selectedNode = findNodeById(tree, selectedNodeId);
+
+        if (!selectedNode) {
             return;
         }
 
+        const trimmedName = nodeName.trim();
+        const childNodeName = trimmedName && trimmedName !== selectedNode.name
+            ? trimmedName : `${selectedNode.name} child`;
+
         const newChild = {
             id: Date.now(),
-            name: nodeName.trim(),
+            name: childNodeName,
             children: [],
         };
 
@@ -92,7 +97,7 @@ function App() {
 
                 <div className="tree-footer">
                     <Controls
-                        onInputValue={nodeName}
+                        inputValue={nodeName}
                         onInputChange={setNodeName}
                         onAdd={handleAdd}
                         onRemove={handleRemove}

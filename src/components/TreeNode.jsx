@@ -5,7 +5,7 @@ function TreeNode( {node, selectedNodeId, onSelect}) {
         <div className="tree-node-wrapper">
             <div
                 onClick={() => onSelect(node.id)}
-                className={`tree-node ${isSelected ? "выбран" : ""}`}
+                className={`tree-node ${isSelected ? "selected" : ""}`}
             >
                 {node.name}
             </div>
