@@ -7,6 +7,7 @@ import { addChildToNode, removeNode, renameNode } from "./utils/treeHelpers";
 function App() {
     const [tree, setTree] = useState(initialTree);
     const [selectedNodeId, setSelectedNodeId] = useState(null);
+    const [nodeName, setNodeName] = useState("");
 
     const handleAdd = () => {
         if (selectedNodeId === null) {
@@ -14,19 +15,19 @@ function App() {
             return;
         }
 
-        const childName = prompt("введите имя потомка");
-
-        if (!childName || !childName.trim()) {
+        if (!nodeName.trim()) {
+            alert("введите имя узла")
             return;
         }
 
         const newChild = {
             id: Date.now(),
-            name: childName.trim(),
+            name: nodeName.trim(),
             children: [],
         };
 
         setTree(addChildToNode(tree, selectedNodeId, newChild));
+        setNodeName("");
     };
 
     const handleRemove = () => {
@@ -41,6 +42,7 @@ function App() {
 
         setTree(removeNode(tree, selectedNodeId));
         setSelectedNodeId(null);
+        setNodeName("");
     };
 
     const handleEdit = () => {
@@ -49,38 +51,45 @@ function App() {
             return;
         }
 
-        const newName = prompt("введите новое имя");
-
-        if (!newName || !newName.trim()) {
+        if (!nodeName.trim()) {
+            alert("введите имя узла");
             return;
         }
 
-        setTree(renameNode(tree, selectedNodeId, newName.trim()));
+        setTree(renameNode(tree, selectedNodeId, nodeName.trim()));
+        setNodeName("");
     };
 
     const handleReset = () => {
         setTree(initialTree);
         setSelectedNodeId(null);
+        setNodeName("");
     };
 
     return (
-        <div style={{ padding: "25px", fontFamily: "Arial, sans-serif"}}>
+        <div className="app-container"> 
             <h1>Дерево</h1>
-
-            <p>Выбранный узел: {selectedNodeId ?? "узел не выбран"}</p>
+            
+            <p className="selected-info">
+                выбран узел: {selectedNodeId ?? "узел не выбран"}
+            </p>
 
             <Controls
+                onInputValue={nodeName}
+                onInputChange={setNodeName}
                 onAdd={handleAdd}
                 onRemove={handleRemove}
                 onEdit={handleEdit}
                 onReset={handleReset}
             />
 
-            <TreeNode
-                node={tree}
-                selectedNodeId={selectedNodeId}
-                onSelect={setSelectedNodeId}
-            />
+            <div className="tree-container">
+                <TreeNode
+                    node={tree}
+                    selectedNodeId={selectedNodeId}
+                    onSelect={setSelectedNodeId}
+                />
+            </div>
         </div>
     );
 }
