@@ -38,3 +38,19 @@ export function removeNode(node, targetId) {
             .map((child) => removeNode(child, targetId)),
     };
 }
+
+export function findNodeById(node, targetId) {
+    if (node.id === targetId) {
+        return node;
+    }
+
+    for (const child of node.children) {
+        const foundNode = findNodeById(child, targetId);
+
+        if (foundNode) {
+            return foundNode;
+        }
+    }
+
+    return null;
+}

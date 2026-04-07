@@ -10,16 +10,16 @@ function Controls({
         <div className="controls">
             <input 
                 type="text"
-                placeholder="введите название узла"
                 value={inputValue}
                 onChange={(e) => onInputChange(e.target.value)}
+                placeholder="введите название узла"
                 className="node-input"
             />
 
             <div className="button-group">
-                <button onClick={onAdd}>Add Child</button>
-                <button onClick={onEdit}>Apply Name</button>
-                <button onClick={onRemove}>Remove Selected</button>
+                <button onClick={onAdd}>Add</button>
+                <button onClick={onEdit}>Edit</button>
+                <button onClick={onRemove}>Remove</button>
                 <button onClick={onReset}>Reset</button>
             </div>
         </div>

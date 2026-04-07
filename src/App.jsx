@@ -2,12 +2,20 @@ import { useState } from "react";
 import TreeNode from "./components/TreeNode";
 import Controls from "./components/Controls";
 import initialTree from "./data/initialTree";
-import { addChildToNode, removeNode, renameNode } from "./utils/treeHelpers";
+import { addChildToNode, removeNode, renameNode, findNodeById } from "./utils/treeHelpers";
+import "./index.css";
 
 function App() {
     const [tree, setTree] = useState(initialTree);
     const [selectedNodeId, setSelectedNodeId] = useState(null);
     const [nodeName, setNodeName] = useState("");
+
+    const handleSelectNode = (nodeId) => {
+        setSelectedNodeId(nodeId);
+
+        const selectedNode = findNodeById(tree, nodeId);
+        setNodeName(selectedNode ? selectedNode.name : "");
+    };
 
     const handleAdd = () => {
         if (selectedNodeId === null) {
@@ -60,38 +68,42 @@ function App() {
         setNodeName("");
     };
 
+
     const handleReset = () => {
         setTree(initialTree);
         setSelectedNodeId(null);
         setNodeName("");
     };
 
+
+
     return (
-        <div className="app-container"> 
-            <h1>Дерево</h1>
+        <div className="page"> 
+            <div className="tree-layout">
+                <div className="tree-header">Дерево</div>
             
-            <p className="selected-info">
-                выбран узел: {selectedNodeId ?? "узел не выбран"}
-            </p>
+                <div className="tree-body">
+                    <TreeNode
+                        node={tree}
+                        selectedNodeId={selectedNodeId}
+                        onSelect={handleSelectNode}
+                    />
+                </div>
 
-            <Controls
-                onInputValue={nodeName}
-                onInputChange={setNodeName}
-                onAdd={handleAdd}
-                onRemove={handleRemove}
-                onEdit={handleEdit}
-                onReset={handleReset}
-            />
-
-            <div className="tree-container">
-                <TreeNode
-                    node={tree}
-                    selectedNodeId={selectedNodeId}
-                    onSelect={setSelectedNodeId}
-                />
+                <div className="tree-footer">
+                    <Controls
+                        onInputValue={nodeName}
+                        onInputChange={setNodeName}
+                        onAdd={handleAdd}
+                        onRemove={handleRemove}
+                        onEdit={handleEdit}
+                        onReset={handleReset}
+                    />
+                </div>
             </div>
         </div>
     );
+
 }
 
 export default App;
