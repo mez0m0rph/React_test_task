@@ -2,14 +2,31 @@ import { useState } from "react";
 import TreeNode from "./components/TreeNode";
 import Controls from "./components/Controls";
 import initialTree from "./data/initialTree";
-import { renameNode } from "./utils/treeHelpers";
+import { addChildToNode, renameNode } from "./utils/treeHelpers";
 
 function App() {
     const [tree, setTree] = useState(initialTree);
     const [selectedNodeId, setSelectedNodeId] = useState(null);
 
     const handleAdd = () => {
-        alert("заглушка пока что");
+        if (selectedNodeId === null) {
+            alert("сначала выберите узел");
+            return;
+        }
+
+        const childName = prompt("введите имя потомка");
+
+        if (!childName || !childName.trim()) {
+            return;
+        }
+
+        const newChild = {
+            id: Date.now(),
+            name: childName.trim(),
+            children: [],
+        };
+
+        setTree(addChildToNode(tree, selectedNodeId, newChild));
     };
 
     const handleRemove = () => {
