@@ -1,16 +1,12 @@
-# React + Vite
+components/ - визуальные части
+data/ - начальные части
+utils/ - чистые функции работы с деревом
+App.jsx - центр приложения, хранит state, все вместе связывает 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+в App будут два состояния: tree (текущее дерево) и selectedNodeId (id выбранного узла)
 
-Currently, two official plugins are available:
+TreeNode: отображает один узел, умеет подсвечивать выбранный узел, по клику сообщает (наверх), что узел выбрали, рекурсивно рендерит дерево
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Controls: показывает кнопки (add child, remove selected, edit selected, reset), дерево сам не меняет, просто вызывает функции, которые пришли сверху
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+TreeHelpers.js: чистые функции (addChildToNode, removeNode, renameNode)
