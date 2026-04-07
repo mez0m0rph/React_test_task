@@ -2,7 +2,7 @@ import { useState } from "react";
 import TreeNode from "./components/TreeNode";
 import Controls from "./components/Controls";
 import initialTree from "./data/initialTree";
-import { addChildToNode, renameNode } from "./utils/treeHelpers";
+import { addChildToNode, removeNode, renameNode } from "./utils/treeHelpers";
 
 function App() {
     const [tree, setTree] = useState(initialTree);
@@ -30,7 +30,17 @@ function App() {
     };
 
     const handleRemove = () => {
-        alert("пока что тоже заглушка"); 
+        if (selectedNodeId === null) {
+            alert("сначала выберите узел");
+            return;
+        }
+        if (selectedNodeId === tree.id) {
+            alert("нельзя удалить кореневой узел");
+            return;
+        }
+
+        setTree(removeNode(tree, selectedNodeId));
+        setSelectedNodeId(null);
     };
 
     const handleEdit = () => {

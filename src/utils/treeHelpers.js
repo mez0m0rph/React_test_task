@@ -29,3 +29,12 @@ export function addChildToNode(node, targetId, newChild) {
         ),
     };
 }
+
+export function removeNode(node, targetId) {
+    return {
+        ...node,
+        children: node.children
+            .filter((child) => child.id !== targetId)
+            .map((child) => removeNode(child, targetId)),
+    };
+}
